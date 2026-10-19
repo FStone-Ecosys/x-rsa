@@ -3,9 +3,9 @@ import { copy, type Voice } from "@/data/menu";
 import { useClub } from "@/lib/club-store";
 
 const marks = [
-  { src: "/scoops/rooibos.jpg", alt: "Rooibos burnt sugar" },
-  { src: "/scoops/naartjie.jpg", alt: "Naartjie granita" },
-  { src: "/scoops/malva.jpg", alt: "Malva night" },
+  { src: "/scoops/rooibos.jpg", alt: "Johannesburg local" },
+  { src: "/scoops/naartjie.jpg", alt: "Cape Town local" },
+  { src: "/scoops/malva.jpg", alt: "Durban local" },
 ];
 
 export function Gate() {

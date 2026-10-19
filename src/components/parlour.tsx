@@ -104,7 +104,7 @@ export function Parlour() {
         </div>
         <img
           src="/scoops/hero.jpg"
-          alt="Rooibos, naartjie and malva scoops on black stone"
+          alt="Local South African content"
           className="aspect-video w-full rounded-2xl object-cover"
         />
       </section>
