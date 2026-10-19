@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { TierId } from "@/data/menu";
+import type { TierId } from "@/data/scene";
 
 type ClubState = {
   entered: boolean;

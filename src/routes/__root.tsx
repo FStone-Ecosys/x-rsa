@@ -3,16 +3,16 @@ import { AuthProvider } from "@/lib/auth/provider";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import appCss from "../styles.css?url";
 
-const APP_NAME = "X-RSA";
+const APP_NAME = "Mzansi Scene";
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "X-RSA — South African ice cream" },
-      { name: "description", content: "X-RSA is a members' parlour for local South African ice cream. www.x-rsa.lfstn.xyz" },
-      { name: "theme-color", content: "#0f0e0c" },
+      { title: "Mzansi Scene — local SA creators, 18+" },
+      { name: "description", content: "Mzansi Scene: a private, 18+ members' platform for verified local South African gay creators. Privacy first, creators keep 75%. www.x-rsa.lfstn.xyz" },
+      { name: "theme-color", content: "#0b0b0d" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },

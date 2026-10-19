@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { copy, type Voice } from "@/data/menu";
+import { copy, type Voice } from "@/data/scene";
+import { Monogram } from "@/components/monogram";
 import { useClub } from "@/lib/club-store";
 
 const marks = [
-  { src: "/scoops/rooibos.jpg", alt: "Johannesburg local" },
-  { src: "/scoops/naartjie.jpg", alt: "Cape Town local" },
-  { src: "/scoops/malva.jpg", alt: "Durban local" },
+  { label: "MS", hue: 330 },
+  { label: "18+", hue: 300 },
+  { label: "SA", hue: 190 },
 ];
 
 export function Gate() {
@@ -19,19 +20,31 @@ export function Gate() {
       <div className="w-full max-w-xl text-center">
         <div className="mb-8 flex items-center justify-center gap-3">
           {marks.map((mark) => (
-            <img
-              key={mark.src}
-              src={mark.src}
-              alt={mark.alt}
-              className="h-16 w-16 rounded-full object-cover ring-2 ring-line"
+            <Monogram
+              key={mark.label}
+              label={mark.label}
+              hue={mark.hue}
+              className="h-16 w-16 rounded-full text-lg ring-2 ring-line"
             />
           ))}
         </div>
         <p className="text-xs font-medium tracking-widest text-gold uppercase">{t.kicker}</p>
         <h1 className="mt-3 font-display text-6xl leading-none text-fg">
-          X-<span className="text-accent">RSA</span>
+          Mzansi <span className="text-accent">Scene</span>
         </h1>
-        <p className="mx-auto mt-5 max-w-md text-base text-muted">{closed ? t.closed : t.gateBody}</p>
+        <p className="mx-auto mt-5 max-w-md text-base text-muted">
+          {closed ? t.closed : t.gateBody}
+        </p>
+        {!closed && (
+          <ul className="mx-auto mt-5 flex max-w-md flex-col gap-2 text-left text-sm text-fg">
+            {t.gatePoints.map((point) => (
+              <li key={point} className="flex gap-2">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                {point}
+              </li>
+            ))}
+          </ul>
+        )}
         <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
           <button
             type="button"
