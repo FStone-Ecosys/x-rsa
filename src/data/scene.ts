@@ -15,11 +15,14 @@ export type Creator = {
   hue: number;
   price: string;
   lane: Lane;
+  /** Atmospheric card art (no people). Monogram is the fallback. */
+  art?: string;
 };
 
 export const creators: Creator[] = [
   {
     id: "demo-jozi-nights",
+    art: "/scene/card-neon-lounge.webp",
     handle: "jozi.after.dark",
     title: "Late shift in Braamfontein",
     city: "Johannesburg",
@@ -31,6 +34,7 @@ export const creators: Creator[] = [
   },
   {
     id: "demo-kaap-sunset",
+    art: "/scene/city-cape-town.webp",
     handle: "kaapse.sonsak",
     title: "Golden hour, Sea Point",
     city: "Cape Town",
@@ -42,6 +46,7 @@ export const creators: Creator[] = [
   },
   {
     id: "demo-durbs-heat",
+    art: "/scene/city-durban.webp",
     handle: "durbs.heatwave",
     title: "Humid nights on the coast",
     city: "Durban",
@@ -53,6 +58,7 @@ export const creators: Creator[] = [
   },
   {
     id: "demo-pta-jacaranda",
+    art: "/scene/city-pretoria.webp",
     handle: "pta.jacaranda",
     title: "Jacaranda season diaries",
     city: "Pretoria",
@@ -64,6 +70,7 @@ export const creators: Creator[] = [
   },
   {
     id: "demo-pe-windy",
+    art: "/scene/city-gqeberha.webp",
     handle: "windy.city.bay",
     title: "Bay breeze, slow mornings",
     city: "Gqeberha",
@@ -75,6 +82,7 @@ export const creators: Creator[] = [
   },
   {
     id: "demo-soweto-vibe",
+    art: "/scene/card-mirrorball.webp",
     handle: "soweto.slowburn",
     title: "Sunday slow burn",
     city: "Johannesburg",
@@ -86,6 +94,7 @@ export const creators: Creator[] = [
   },
   {
     id: "demo-melville-ppv",
+    art: "/scene/card-leather.webp",
     handle: "melville.mood",
     title: "Behind the curtain, part two",
     city: "Johannesburg",
@@ -97,6 +106,7 @@ export const creators: Creator[] = [
   },
   {
     id: "demo-observatory",
+    art: "/scene/card-glass.webp",
     handle: "obs.after.hours",
     title: "Observatory after hours",
     city: "Cape Town",
@@ -113,6 +123,15 @@ export const tiers: { id: TierId; price: string; cadence: "once" | "month" }[] =
   { id: "regular", price: "R249", cadence: "month" },
   { id: "house", price: "R499", cadence: "month" },
 ];
+
+export const heroArt = "/scene/hero-johannesburg.webp";
+export const cityArt: Record<City, string> = {
+  Johannesburg: "/scene/hero-johannesburg.webp",
+  "Cape Town": "/scene/city-cape-town.webp",
+  Durban: "/scene/city-durban.webp",
+  Pretoria: "/scene/city-pretoria.webp",
+  Gqeberha: "/scene/city-gqeberha.webp",
+};
 
 export const cities: City[] = ["Johannesburg", "Cape Town", "Durban", "Pretoria", "Gqeberha"];
 export const tags: Tag[] = ["Amateur", "Real locals", "New", "PPV", "Members"];
@@ -148,6 +167,13 @@ type Copy = {
   footer1: string;
   footer2: string;
   demoProfile: string;
+  comingSoon: string;
+  foundingNote: string;
+  citiesTitle: string;
+  creatorTitle: string;
+  creatorBody: string;
+  creatorPoints: string[];
+  creatorCta: string;
   joined: string;
   allCities: string;
   locked: string;
@@ -197,6 +223,19 @@ export const copy: Record<Voice, Copy> = {
     footer1: "Mzansi Scene · www.x-rsa.lfstn.xyz · Demo platform. Nothing is charged.",
     footer2: "Creators keep 75% · 18+ verified adults only · Privacy first",
     demoProfile: "Demo profile",
+    comingSoon: "Founding creator · coming soon",
+    foundingNote:
+      "Our founding creators are being verified now. These cards show the vibe, not real people.",
+    citiesTitle: "Your city",
+    creatorTitle: "Become a creator",
+    creatorBody: "Make content on your terms and get paid by locals who get it.",
+    creatorPoints: [
+      "Strictly 18+, ID-verified before anything goes live.",
+      "Signed consent on file for everyone in every post.",
+      "You keep 75% of subscriptions, PPV and tips.",
+      "Your privacy first: you control what shows and where.",
+    ],
+    creatorCta: "Apply as a creator",
     joined: "You're in",
     allCities: "All cities",
     locked: "Members",
@@ -258,6 +297,19 @@ export const copy: Record<Voice, Copy> = {
     footer1: "Mzansi Scene · www.x-rsa.lfstn.xyz · Demo-platform. Niks word gehef nie.",
     footer2: "Skeppers hou 75% · Slegs geverifieerde volwassenes (18+) · Privaatheid eerste",
     demoProfile: "Demo-profiel",
+    comingSoon: "Stigterskepper · kom binnekort",
+    foundingNote:
+      "Ons stigterskeppers word nou geverifieer. Hierdie kaarte wys die gevoel, nie regte mense nie.",
+    citiesTitle: "Jou stad",
+    creatorTitle: "Word ’n skepper",
+    creatorBody: "Maak inhoud op jou terme en kry betaal deur plaaslikes wat dit verstaan.",
+    creatorPoints: [
+      "Streng 18+, ID-geverifieer voordat enigiets lewendig gaan.",
+      "Getekende toestemming op lêer vir almal in elke plasing.",
+      "Jy hou 75% van intekeninge, PPV en fooitjies.",
+      "Jou privaatheid eerste: jy beheer wat wys en waar.",
+    ],
+    creatorCta: "Doen aansoek as skepper",
     joined: "Jy’s in",
     allCities: "Alle stede",
     locked: "Lede",
@@ -328,6 +380,19 @@ export const copy: Record<Voice, Copy> = {
     footer2:
       "Abadali bagcina u-75% · Abantu abadala abaqinisekisiwe (18+) kuphela · Ubumfihlo kuqala",
     demoProfile: "Iphrofayela yesibonelo",
+    comingSoon: "Umdali wokuqala · uyeza maduze",
+    foundingNote:
+      "Abadali bethu bokuqala basaqinisekiswa manje. Lawa makhadi akhombisa umoya, hhayi abantu bangempela.",
+    citiesTitle: "Idolobha lakho",
+    creatorTitle: "Yiba ngumdali",
+    creatorBody: "Dala okuqukethwe ngendlela yakho futhi ukhokhelwe ngabantu bendawo abakuqondayo.",
+    creatorPoints: [
+      "Abaneminyaka engu-18+ kuphela, ubunikazi buqinisekisiwe ngaphambi kokuthi kushicilelwe.",
+      "Imvume esayiniwe igcinwe kubo bonke abakuthumela ngakunye.",
+      "Ugcina u-75% wokubhalisa, i-PPV namathiphu.",
+      "Ubumfihlo bakho kuqala: wena ulawula okuboniswayo nokuthi kuphi.",
+    ],
+    creatorCta: "Faka isicelo sokuba ngumdali",
     joined: "Usungenile",
     allCities: "Wonke amadolobha",
     locked: "Amalungu",

@@ -2,6 +2,8 @@ import { useMemo, useState } from "react";
 import { Lock, Search } from "lucide-react";
 import {
   cities,
+  cityArt,
+  heroArt,
   copy,
   monogram,
   creators,
@@ -30,8 +32,7 @@ export function Feed() {
   const match = (item: (typeof creators)[number]) => {
     if (city !== "all" && item.city !== city) return false;
     if (!q) return true;
-    const blob =
-      `${item.handle} ${item.city} ${item.title} ${item.tags.join(" ")}`.toLowerCase();
+    const blob = `${item.handle} ${item.city} ${item.title} ${item.tags.join(" ")}`.toLowerCase();
     return blob.includes(q);
   };
 
@@ -126,14 +127,47 @@ export function Feed() {
           </a>
           <p className="mt-3 text-sm text-muted">{t.heroNote}</p>
         </div>
-        <Monogram label="MS" hue={320} className="aspect-video w-full rounded-2xl text-7xl" />
+        <Art
+          src={heroArt}
+          alt="Johannesburg skyline at night"
+          label="MS"
+          hue={320}
+          className="aspect-video w-full rounded-2xl text-7xl"
+        />
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-10 md:px-6">
+        <h2 className="mb-4 font-display text-3xl">{t.citiesTitle}</h2>
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+          {cities.map((c) => (
+            <button
+              key={c}
+              type="button"
+              onClick={() => setCity(city === c ? "all" : c)}
+              className={`relative overflow-hidden rounded-xl text-left ${
+                city === c ? "ring-2 ring-accent" : ""
+              }`}
+            >
+              <Art
+                src={cityArt[c]}
+                alt={t.cityName[c]}
+                label={c.slice(0, 2)}
+                className="aspect-[16/10] w-full text-3xl"
+              />
+              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg/90 to-transparent p-2 text-sm font-semibold">
+                {t.cityName[c]}
+              </span>
+            </button>
+          ))}
+        </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-6 md:px-6">
-        <h2 className="mb-4 flex items-center gap-2 font-display text-3xl">
+        <h2 className="mb-1 flex items-center gap-2 font-display text-3xl">
           {t.featured}
           <span className="h-2 w-2 rounded-full bg-accent" />
         </h2>
+        <p className="mb-4 max-w-xl text-sm text-muted">{t.foundingNote}</p>
         {board.length === 0 ? (
           <p className="text-sm text-muted">{t.empty}</p>
         ) : (
@@ -146,6 +180,7 @@ export function Feed() {
                 locked={false}
                 lockLabel={t.locked}
                 demoLabel={t.demoProfile}
+                soonLabel={t.comingSoon}
               />
             ))}
           </div>
@@ -184,6 +219,7 @@ export function Feed() {
                     locked={locked}
                     lockLabel={t.locked}
                     demoLabel={t.demoProfile}
+                    soonLabel={t.comingSoon}
                   />
                 );
               })}
@@ -231,6 +267,35 @@ export function Feed() {
         {paid && <p className="mt-4 text-sm text-gold">{t.demoPay}</p>}
       </section>
 
+      <section id="creators" className="mx-auto max-w-6xl px-4 pb-12 md:px-6">
+        <div className="relative overflow-hidden rounded-2xl border border-line">
+          <Art
+            src="/scene/card-smoke.webp"
+            alt=""
+            label="MS"
+            className="absolute inset-0 h-full w-full opacity-40"
+          />
+          <div className="relative p-6 md:p-10">
+            <h2 className="font-display text-4xl">{t.creatorTitle}</h2>
+            <p className="mt-2 max-w-xl text-sm text-muted">{t.creatorBody}</p>
+            <ul className="mt-4 grid gap-2 text-sm md:grid-cols-2">
+              {t.creatorPoints.map((pt) => (
+                <li key={pt} className="flex gap-2">
+                  <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-accent" />
+                  {pt}
+                </li>
+              ))}
+            </ul>
+            <a
+              href="#creators"
+              className="mt-6 inline-flex min-h-11 items-center rounded-full bg-accent px-6 text-sm font-semibold text-accent-ink"
+            >
+              {t.creatorCta}
+            </a>
+          </div>
+        </div>
+      </section>
+
       <footer className="border-t border-line px-4 py-8 text-center text-sm text-muted">
         <p>{t.footer1}</p>
         <p className="mt-1">{t.footer2}</p>
@@ -251,17 +316,21 @@ function CreatorCard({
   locked,
   lockLabel,
   demoLabel,
+  soonLabel,
 }: {
   creator: (typeof creators)[number];
   cityLabel: string;
   locked: boolean;
   lockLabel: string;
   demoLabel: string;
+  soonLabel: string;
 }) {
   return (
     <article className="overflow-hidden rounded-2xl bg-surface">
       <div className="relative">
-        <Monogram
+        <Art
+          src={creator.art}
+          alt=""
           label={monogram(creator.handle)}
           hue={creator.hue}
           className="aspect-[4/5] w-full text-5xl"
@@ -284,7 +353,7 @@ function CreatorCard({
       <div className="p-3">
         <h3 className="font-display text-xl leading-tight">{creator.title}</h3>
         <p className="mt-1 text-sm text-muted">
-          @{creator.handle} · {creator.langs.map((l) => l.toUpperCase()).join(" · ")}
+          {soonLabel} · {creator.langs.map((l) => l.toUpperCase()).join(" · ")}
         </p>
         <p className="mt-2 flex items-center justify-between text-sm">
           <span className="font-semibold text-gold">{creator.price}</span>
@@ -294,5 +363,33 @@ function CreatorCard({
         </p>
       </div>
     </article>
+  );
+}
+
+/** Atmospheric image with the monogram as fallback if it fails to load. */
+function Art({
+  src,
+  alt,
+  label,
+  hue,
+  className = "",
+}: {
+  src?: string;
+  alt: string;
+  label: string;
+  hue?: number;
+  className?: string;
+}) {
+  const [failed, setFailed] = useState(false);
+  if (!src || failed) return <Monogram label={label} hue={hue} className={className} />;
+  return (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      onError={() => setFailed(true)}
+      className={`bg-bg object-cover ${className}`}
+    />
   );
 }
