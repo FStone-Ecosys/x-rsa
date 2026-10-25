@@ -22,3 +22,12 @@ Demo checkout. Nothing is charged.
 npm install
 npm run dev
 ```
+
+## How to add a free embed (30 seconds)
+
+1. Copy the normal share link from Pornhub, xHamster or XVideos (only these three work).
+2. Open `src/data/embeds.ts` and add a line inside the `embeds` array:
+   `{ url: "https://www.xvideos.com/video123/slug", title: "Optional", city: "Durban" },`
+3. Commit and push. It appears in the free **Taste** section after the 18+ gate, played by the site's official embed player, labelled "via …".
+
+Only embed via official players; never download or re-host. Links from any other site are ignored. Pull any video on request.

@@ -15,6 +15,7 @@ import {
   type Voice,
 } from "@/data/scene";
 import { Monogram } from "@/components/monogram";
+import { Taste } from "@/components/taste";
 import { useClub } from "@/lib/club-store";
 
 export function Feed() {
@@ -227,6 +228,14 @@ export function Feed() {
           )}
         </section>
       )}
+
+      <Taste
+        voice={voice}
+        onUnlock={() => {
+          take("entry");
+          document.getElementById("membership")?.scrollIntoView({ behavior: "smooth" });
+        }}
+      />
 
       <section id="membership" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-12 md:px-6">
         <h2 className="font-display text-3xl">{t.tiersTitle}</h2>
